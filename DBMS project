@@ -1,0 +1,39 @@
+CREATE TABLE Books (
+    BookID INT PRIMARY KEY,
+    Title VARCHAR(100),
+    Author VARCHAR(50),
+    Publisher VARCHAR(50),
+    YearPublished YEAR,
+    Status VARCHAR(10)
+);
+
+CREATE TABLE Members (
+    MemberID INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Email VARCHAR(50),
+    Phone VARCHAR(15),
+    MembershipType VARCHAR(20)
+);
+
+CREATE TABLE Issue (
+    IssueID INT PRIMARY KEY,
+    BookID INT,
+    MemberID INT,
+    IssueDate DATE,
+    ReturnDate DATE,
+    FOREIGN KEY (BookID) REFERENCES Books(BookID),
+    FOREIGN KEY (MemberID) REFERENCES Members(MemberID)
+);
+INSERT INTO Books VALUES (1, 'Database Systems', 'Korth', 'McGraw-Hill', 2019, 'Available');
+INSERT INTO Books VALUES (2, 'Programming in C', 'Balagurusamy', 'Tata McGraw', 2018, 'Available');
+
+INSERT INTO Members VALUES (101, 'Alice', 'alice@gmail.com', '1234567890', 'Student');
+INSERT INTO Members VALUES (102, 'Bob', 'bob@gmail.com', '0987654321', 'Faculty');
+
+INSERT INTO Issue VALUES (1001, 1, 101, '2025-11-01', NULL);
+SELECT * FROM Books;
+SELECT * FROM Books WHERE Status='Available';
+UPDATE Books SET Status='Issued' WHERE BookID=1;
+INSERT INTO Issue (IssueID, BookID, MemberID, IssueDate, ReturnDate) VALUES (1002, 2, 102, '2025-11-03', NULL);
+UPDATE Books SET Status='Available' WHERE BookID=1;
+UPDATE Issue SET ReturnDate='2025-11-03' WHERE IssueID=1001;
